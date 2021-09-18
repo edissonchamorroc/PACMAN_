@@ -2,6 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include<pac.h>
+#include<QGraphicsScene>
+#include<QKeyEvent>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -14,8 +17,12 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+public slots:
 
 private:
+    QGraphicsScene *scene;
+    pac *pacman;
     Ui::MainWindow *ui;
+    void keyPressEvent(QKeyEvent *evento);
 };
 #endif // MAINWINDOW_H

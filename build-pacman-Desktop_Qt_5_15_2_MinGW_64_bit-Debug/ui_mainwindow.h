@@ -35,18 +35,18 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(800, 600);
+        MainWindow->resize(700, 750);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         graphicsView = new QGraphicsView(centralwidget);
         graphicsView->setObjectName(QString::fromUtf8("graphicsView"));
-        graphicsView->setGeometry(QRect(10, 30, 770, 510));
+        graphicsView->setGeometry(QRect(20, 30, 610, 660));
         puntaje = new QLCDNumber(centralwidget);
         puntaje->setObjectName(QString::fromUtf8("puntaje"));
-        puntaje->setGeometry(QRect(613, 0, 101, 23));
+        puntaje->setGeometry(QRect(490, 0, 101, 23));
         label = new QLabel(centralwidget);
         label->setObjectName(QString::fromUtf8("label"));
-        label->setGeometry(QRect(540, 0, 71, 21));
+        label->setGeometry(QRect(420, 0, 71, 21));
         QFont font;
         font.setBold(true);
         font.setItalic(true);
@@ -55,7 +55,7 @@ public:
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 800, 21));
+        menubar->setGeometry(QRect(0, 0, 700, 21));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));

@@ -11,11 +11,15 @@ CONFIG += c++11
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
-    pac.cpp
+    moneda.cpp \
+    pac.cpp \
+    pared.cpp
 
 HEADERS += \
     mainwindow.h \
-    pac.h
+    moneda.h \
+    pac.h \
+    pared.h
 
 FORMS += \
     mainwindow.ui

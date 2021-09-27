@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>700</width>
+    <height>750</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,17 +17,17 @@
    <widget class="QGraphicsView" name="graphicsView">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>20</x>
       <y>30</y>
-      <width>770</width>
-      <height>510</height>
+      <width>610</width>
+      <height>660</height>
      </rect>
     </property>
    </widget>
    <widget class="QLCDNumber" name="puntaje">
     <property name="geometry">
      <rect>
-      <x>613</x>
+      <x>490</x>
       <y>0</y>
       <width>101</width>
       <height>23</height>
@@ -37,7 +37,7 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>540</x>
+      <x>420</x>
       <y>0</y>
       <width>71</width>
       <height>21</height>
@@ -60,7 +60,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>700</width>
      <height>21</height>
     </rect>
    </property>

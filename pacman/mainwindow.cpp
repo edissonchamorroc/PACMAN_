@@ -12,22 +12,21 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->graphicsView->setScene(scene);
 
+    setWindowTitle("PACMAN");
+
     scene->setSceneRect(0,0,600,650);
 
     scene->setBackgroundBrush(Qt::black);
 
-    pacman=new pac(300,300,15);
+    pacman=new pac(300,300);
 
     scene->addItem(pacman);
 
     lecturaMuros();
 
-    for(int i=20;i<=380;i+=10){
-           if(i<185 | i>210){
-          coins.append(new moneda(3,-i,-15));
-          scene->addItem(coins.back());
-           }
-          }
+    lecturaMonedas();
+
+
 
 
 }
@@ -115,6 +114,29 @@ void MainWindow::lecturaMuros()
 
         }
     }
+    lector.close();
+}
+
+void MainWindow::lecturaMonedas()
+{
+    lector.open("monedas.txt");
+    string leido;
+    int posicion[3],contador=0;
+    if(!lector.fail()){
+        while(!lector.eof()){
+            lector>>leido;
+            posicion[contador]=conversionStr2Int(leido);
+            contador++;
+            if(contador==3){
+                coins.append(new moneda(posicion[0],posicion[1],posicion[2]));
+                scene->addItem(coins.back());
+                posicion[0]=0;posicion[1]=0;posicion[2]=0;
+                contador=0;
+            }
+
+        }
+    }
+    lector.close();
 }
 
 int MainWindow::conversionStr2Int(string numero)
@@ -163,7 +185,8 @@ bool MainWindow::evaluarColisionMoneda(QList<moneda*>::iterator &ite)
 {
 
     for(ite=coins.begin();ite!=coins.end();ite++){
-        if(pacman->collidesWithItem(*ite)) return true; break;
+        if(pacman->collidesWithItem(*ite))
+        {return true; break;}
     }
     return false;
 }

@@ -43,6 +43,8 @@ private:
 
     void lecturaMuros();
 
+    void lecturaMonedas();
+
     int conversionStr2Int(string numero);
 
     bool evaluarColisionMuro();

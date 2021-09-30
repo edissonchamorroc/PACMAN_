@@ -1,16 +1,17 @@
 #include "pac.h"
 
+
 pac::pac(int x)
 {
-
+    
 }
 
 pac::pac(int x, int y)
 {
     timer =new QTimer();
-
+    
     posx=x;
-
+    
     posy=y;
 
     r=15;

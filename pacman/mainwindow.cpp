@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     scene->setBackgroundBrush(Qt::black);
 
-    pacman=new pac(300,300);
+    pacman=new pac(300,310);
 
     scene->addItem(pacman);
 
@@ -39,10 +39,12 @@ MainWindow::~MainWindow()
 void MainWindow::keyPressEvent(QKeyEvent *evento)
 {
     QList<moneda*>::iterator ite=coins.begin();
+    QList<pared*>::iterator it=paredes.begin();
     if(evento->key()==Qt::Key_W){
         pacman->MoveUp();
-        if(evaluarColisionMuro()){
+        if(evaluarColisionMuro(it)){
             pacman->MoveDown();
+            evaluarPosicion(it);
         }
         if(evaluarColisionMoneda(ite)){
             scene->removeItem(*ite);
@@ -55,8 +57,9 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
     }
     else if(evento->key()==Qt::Key_S){
         pacman->MoveDown();
-        if(evaluarColisionMuro()){
+        if(evaluarColisionMuro(it)){
             pacman->MoveUp();
+            evaluarPosicion(it);
         }
         if(evaluarColisionMoneda(ite)){
             scene->removeItem(*ite);
@@ -68,8 +71,9 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
     }
     else if(evento->key()==Qt::Key_D){
         pacman->MoveRight();
-        if(evaluarColisionMuro()){
+        if(evaluarColisionMuro(it)){
             pacman->MoveLeft();
+            evaluarPosicion(it);
         }
         if(evaluarColisionMoneda(ite)){
             scene->removeItem(*ite);
@@ -81,8 +85,9 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
     }
     else if(evento->key()==Qt::Key_A){
         pacman->MoveLeft();
-        if(evaluarColisionMuro()){
+        if(evaluarColisionMuro(it)){
             pacman->MoveRight();
+            evaluarPosicion(it);
         }
         if(evaluarColisionMoneda(ite)){
             scene->removeItem(*ite);
@@ -170,13 +175,17 @@ int MainWindow::conversionStr2Int(string numero)
     return char2int;
 }
 
-bool MainWindow::evaluarColisionMuro()
+bool MainWindow::evaluarColisionMuro(QList<pared*>::iterator &ite)
 {
-    QList<pared*>::iterator ite;
+
     bool colision=false;
 
     for(ite=paredes.begin();ite!=paredes.end();ite++){
-        if(pacman->collidesWithItem(*ite)) colision=true;
+        if(pacman->collidesWithItem(*ite)){
+
+            colision=true;
+            break;
+        }
     }
     return colision;
 }
@@ -190,4 +199,17 @@ bool MainWindow::evaluarColisionMoneda(QList<moneda*>::iterator &ite)
     }
     return false;
 }
+
+void MainWindow::evaluarPosicion(QList<pared*>::iterator &it)
+{
+    QList<pared*>::iterator it2=paredes.end();
+    if(it==(it2-2)){
+       pacman->setPos(570,310);
+    }
+    else if(it==(it2-1)){
+        pacman->setPos(0,310);
+    }
+    it2=paredes.begin();
+}
+
 

@@ -204,12 +204,16 @@ void MainWindow::evaluarPosicion(QList<pared*>::iterator &it)
 {
     QList<pared*>::iterator it2=paredes.end();
     if(it==(it2-2)){
-       pacman->setPos(570,310);
+       pacman->setPosx(570);
+       pacman->setPosy(310);
+
     }
     else if(it==(it2-1)){
-        pacman->setPos(0,310);
+        pacman->setPosx(10);
+        pacman->setPosy(310);
+
     }
-    it2=paredes.begin();
+
 }
 
 

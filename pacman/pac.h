@@ -35,6 +35,10 @@ public:
 
 
 
+    void setPosy(int value);
+
+    void setPosx(int value);
+
 signals:
 public slots:
     void actualizacion();

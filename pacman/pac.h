@@ -5,6 +5,9 @@
 #include<QTimer>
 #include<QPixmap>
 #include<QObject>
+#include<iostream>
+
+using namespace std;
 
 class pac:public QGraphicsItem, public QObject
 {
@@ -29,6 +32,12 @@ public:
     void MoveLeft();
     void MoveUp();
     void MoveDown();
+
+
+
+    void setPosy(int value);
+
+    void setPosx(int value);
 
 signals:
 public slots:

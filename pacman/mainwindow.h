@@ -11,6 +11,8 @@
 #include<fstream>
 #include<string>
 
+
+
 using namespace std;
 
 QT_BEGIN_NAMESPACE
@@ -47,11 +49,11 @@ private:
 
     int conversionStr2Int(string numero);
 
-    bool evaluarColisionMuro();
+    bool evaluarColisionMuro(QList<pared*>::iterator &ite);
 
     bool evaluarColisionMoneda(QList<moneda*>::iterator &ite);
 
-    int evaluarPosicion();
+    void evaluarPosicion(QList<pared*>::iterator &it);
 
     int puntos=0;
 

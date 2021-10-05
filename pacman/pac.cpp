@@ -1,16 +1,27 @@
 #include "pac.h"
 
+
+void pac::setPosy(int value)
+{
+    posy = value;
+}
+
+void pac::setPosx(int value)
+{
+    posx = value;
+}
+
 pac::pac(int x)
 {
-
+    
 }
 
 pac::pac(int x, int y)
 {
     timer =new QTimer();
-
+    
     posx=x;
-
+    
     posy=y;
 
     r=15;
@@ -22,7 +33,6 @@ pac::pac(int x, int y)
     columnas=0;
 
     pixmap=new QPixmap(":/imagenes/pacman.png");
-
 
     timer->start(100);
 
@@ -39,8 +49,7 @@ QRectF pac::boundingRect() const
 
 void pac::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    //painter->setBrush(Qt::yellow);
-    //painter->drawEllipse(boundingRect());
+
     painter->drawPixmap(-r,-r,*pixmap,columnas,filas,2*r,2*r);
 
 }

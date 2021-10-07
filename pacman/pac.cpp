@@ -11,6 +11,16 @@ void pac::setPosx(int value)
     posx = value;
 }
 
+int pac::getPosx() const
+{
+    return posx;
+}
+
+int pac::getPosy() const
+{
+    return posy;
+}
+
 pac::pac(int x)
 {
     

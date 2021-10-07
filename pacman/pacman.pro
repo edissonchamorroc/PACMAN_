@@ -9,6 +9,7 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    fantasma.cpp \
     main.cpp \
     mainwindow.cpp \
     moneda.cpp \
@@ -16,6 +17,7 @@ SOURCES += \
     pared.cpp
 
 HEADERS += \
+    fantasma.h \
     mainwindow.h \
     moneda.h \
     pac.h \
@@ -30,6 +32,4 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 RESOURCES += \
-    imagenes.qrc \
-    imagenes.qrc \
     sprite.qrc

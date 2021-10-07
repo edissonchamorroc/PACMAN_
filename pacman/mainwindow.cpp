@@ -22,12 +22,24 @@ MainWindow::MainWindow(QWidget *parent)
 
     scene->addItem(pacman);
 
-    lecturaMuros();
+    ghosts.append(new fantasma(580,310,1));
+    ghosts.append(new fantasma(20,20,2));
+    ghosts.append(new fantasma(20,580,3));
 
-    lecturaMonedas();
+    for(int i=0;i<3;i++){
+        scene->addItem(ghosts.at(i));
+    }
 
 
+    lecturaPosicionMuros();
 
+    lecturaPosicionMonedas();
+
+    timer = new QTimer();
+
+    connect(timer,&QTimer::timeout,this,&MainWindow::fantasmasMovimiento);
+
+    timer->start(25);
 
 }
 
@@ -42,9 +54,9 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
     QList<pared*>::iterator it=paredes.begin();
     if(evento->key()==Qt::Key_W){
         pacman->MoveUp();
-        if(evaluarColisionMuro(it)){
+        if(evaluarPacmanColisionMuro(it)){
             pacman->MoveDown();
-            evaluarPosicion(it);
+            evaluarPacmanEnMapa(it);
         }
         if(evaluarColisionMoneda(ite)){
             scene->removeItem(*ite);
@@ -57,9 +69,9 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
     }
     else if(evento->key()==Qt::Key_S){
         pacman->MoveDown();
-        if(evaluarColisionMuro(it)){
+        if(evaluarPacmanColisionMuro(it)){
             pacman->MoveUp();
-            evaluarPosicion(it);
+            evaluarPacmanEnMapa(it);
         }
         if(evaluarColisionMoneda(ite)){
             scene->removeItem(*ite);
@@ -71,9 +83,9 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
     }
     else if(evento->key()==Qt::Key_D){
         pacman->MoveRight();
-        if(evaluarColisionMuro(it)){
+        if(evaluarPacmanColisionMuro(it)){
             pacman->MoveLeft();
-            evaluarPosicion(it);
+            evaluarPacmanEnMapa(it);
         }
         if(evaluarColisionMoneda(ite)){
             scene->removeItem(*ite);
@@ -85,9 +97,9 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
     }
     else if(evento->key()==Qt::Key_A){
         pacman->MoveLeft();
-        if(evaluarColisionMuro(it)){
+        if(evaluarPacmanColisionMuro(it)){
             pacman->MoveRight();
-            evaluarPosicion(it);
+            evaluarPacmanEnMapa(it);
         }
         if(evaluarColisionMoneda(ite)){
             scene->removeItem(*ite);
@@ -99,7 +111,71 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
     }
 }
 
-void MainWindow::lecturaMuros()
+void MainWindow::fantasmasMovimiento()
+{
+    QList<pared*>::iterator it=paredes.begin();
+
+    for(int i=0;i<ghosts.size();i++){
+
+        if(ghosts.at(i)->getPosicionX() < pacman->getPosx()){
+            ghosts.at(i)->moveRight();
+            if(evaluarFantasmaColisionMuro(it)){
+                ghosts.at(i)->moveLeft();
+
+            }
+
+            if(ghosts.at(i)->collidesWithItem(pacman)){
+              scene->removeItem(pacman);
+              MainWindow::close();
+          }
+       }
+
+        if(ghosts.at(i)->getPosicionX() > pacman->getPosx()){
+            ghosts.at(i)->moveLeft();
+            if(evaluarFantasmaColisionMuro(it)){
+                ghosts.at(i)->moveRight();
+
+            }
+
+            if(ghosts.at(i)->collidesWithItem(pacman)){
+               scene->removeItem(pacman);
+               MainWindow::close();
+            }
+
+        }
+
+        if(ghosts.at(i)->getPosicionY() > pacman->getPosy()){
+            ghosts.at(i)->moveUp();
+            if(evaluarFantasmaColisionMuro(it)){
+
+                ghosts.at(i)->moveDown();
+
+            }
+            if(ghosts.at(i)->collidesWithItem(pacman)){
+               scene->removeItem(pacman);
+               MainWindow::close();
+            }
+
+        }
+
+        if(ghosts.at(i)->getPosicionY() < pacman->getPosy()){
+            ghosts.at(i)->moveDown();
+            if(evaluarFantasmaColisionMuro(it)){
+                ghosts.at(i)->moveUp();
+            }
+            if(ghosts.at(i)->collidesWithItem(pacman)){
+               scene->removeItem(pacman);
+               MainWindow::close();
+            }
+
+        }
+    }
+
+
+}
+
+
+void MainWindow::lecturaPosicionMuros()
 {
     lector.open("paredes.txt");
     string leido;
@@ -122,7 +198,7 @@ void MainWindow::lecturaMuros()
     lector.close();
 }
 
-void MainWindow::lecturaMonedas()
+void MainWindow::lecturaPosicionMonedas()
 {
     lector.open("monedas.txt");
     string leido;
@@ -175,15 +251,34 @@ int MainWindow::conversionStr2Int(string numero)
     return char2int;
 }
 
-bool MainWindow::evaluarColisionMuro(QList<pared*>::iterator &ite)
+bool MainWindow::evaluarFantasmaColisionMuro(QList<pared*>::iterator &ite)
+{
+    bool colision=false;
+
+    for(ite=paredes.begin();ite!=paredes.end();ite++){
+        for(int i=0;i<ghosts.size();i++){
+            if(ghosts.at(i)->collidesWithItem(*ite)){
+                 colision=true;
+                break;
+            }
+        }
+    }
+    return colision;
+}
+
+bool MainWindow::evaluarFantasmaColisionFantasma()
+{
+
+}
+
+bool MainWindow::evaluarPacmanColisionMuro(QList<pared*>::iterator &ite)
 {
 
     bool colision=false;
 
     for(ite=paredes.begin();ite!=paredes.end();ite++){
         if(pacman->collidesWithItem(*ite)){
-
-            colision=true;
+             colision=true;
             break;
         }
     }
@@ -200,7 +295,7 @@ bool MainWindow::evaluarColisionMoneda(QList<moneda*>::iterator &ite)
     return false;
 }
 
-void MainWindow::evaluarPosicion(QList<pared*>::iterator &it)
+void MainWindow::evaluarPacmanEnMapa(QList<pared *>::iterator &it)
 {
     QList<pared*>::iterator it2=paredes.end();
     if(it==(it2-2)){

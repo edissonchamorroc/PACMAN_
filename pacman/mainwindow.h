@@ -8,8 +8,10 @@
 #include<QList>
 #include<pared.h>
 #include<moneda.h>
+#include<fantasma.h>
 #include<fstream>
 #include<string>
+#include<QTimer>
 
 
 
@@ -35,6 +37,8 @@ private:
 
     pac *pacman;
 
+    QList<fantasma*> ghosts;
+
     QList<pared*> paredes;
 
     QList<moneda*> coins;
@@ -43,19 +47,29 @@ private:
 
     void keyPressEvent(QKeyEvent *evento);
 
-    void lecturaMuros();
+    void lecturaPosicionMuros();
 
-    void lecturaMonedas();
+    void lecturaPosicionMonedas();
 
     int conversionStr2Int(string numero);
 
-    bool evaluarColisionMuro(QList<pared*>::iterator &ite);
+    bool evaluarPacmanColisionMuro(QList<pared*>::iterator &ite);
+
+    bool evaluarFantasmaColisionMuro(QList<pared*>::iterator &ite);
+
+    bool evaluarFantasmaColisionFantasma();
 
     bool evaluarColisionMoneda(QList<moneda*>::iterator &ite);
 
-    void evaluarPosicion(QList<pared*>::iterator &it);
+    void evaluarPacmanEnMapa(QList<pared*>::iterator &it);
 
     int puntos=0;
+
+    QTimer *timer;
+
+signals:
+public slots:
+    void fantasmasMovimiento();
 
 
 };
